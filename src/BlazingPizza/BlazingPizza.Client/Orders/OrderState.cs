@@ -62,12 +62,8 @@ internal sealed class OrderState(LocalStorageJSInterop js)
                 "address", Order.DeliveryAddress);
         }
 
-        var address = await js.GetLocalStorageItemAsync<Address>(
-            "address");
+        Order = new();
 
-        Order = new Order()
-        {
-            DeliveryAddress = address
-        };
+        await InitializeOrderAsync();
     }
 }
