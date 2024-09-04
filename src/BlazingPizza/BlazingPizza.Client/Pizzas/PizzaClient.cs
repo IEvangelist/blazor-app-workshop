@@ -1,11 +1,9 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using System.Net.Http.Json;
+namespace BlazingPizza.Client.Pizzas;
 
-namespace BlazingPizza.Client;
-
-internal sealed class ApiClient(HttpClient client)
+internal sealed class PizzaClient(HttpClient client)
 {
     public async Task<List<PizzaSpecial>> GetSpecialsAsync()
     {

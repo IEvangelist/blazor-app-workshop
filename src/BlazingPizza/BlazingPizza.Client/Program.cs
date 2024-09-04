@@ -1,8 +1,7 @@
-using BlazingPizza.Client;
-using BlazingPizza.Client.Orders;
-using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using Microsoft.AspNetCore.Components.WebAssembly.Http;
+// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+
+using BlazingPizza.Client.Pizzas;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
@@ -10,28 +9,14 @@ builder.Services.AddAuthorizationCore();
 builder.Services.AddCascadingAuthenticationState();
 builder.Services.AddSingleton<AuthenticationStateProvider, PersistentAuthenticationStateProvider>();
 
-builder.Services.AddTransient<CookieHandler>();
+builder.Services.AddLocalStorageJSInterop();
 
-builder.Services.AddHttpClient<ApiClient>(
-    client => client.BaseAddress = new(builder.HostEnvironment.BaseAddress))
-    .AddHttpMessageHandler<CookieHandler>();
+builder.Services.AddHttpClient<PizzaClient>(
+    client => client.BaseAddress = new(builder.HostEnvironment.BaseAddress));
 
 builder.Services.AddScoped<OrderState>();
 
 builder.Services.AddHttpClient<OrdersClient>(
-    client => client.BaseAddress = new(builder.HostEnvironment.BaseAddress))
-    .AddHttpMessageHandler<CookieHandler>();
+    client => client.BaseAddress = new(builder.HostEnvironment.BaseAddress));
 
 await builder.Build().RunAsync();
-
-public class CookieHandler : DelegatingHandler
-{
-    protected override Task<HttpResponseMessage> SendAsync(
-        HttpRequestMessage request, CancellationToken cancellationToken)
-    {
-        request.SetBrowserRequestCredentials(BrowserRequestCredentials.Include);
-        request.Headers.Add("X-Requested-With", ["XMLHttpRequest"]);
-
-        return base.SendAsync(request, cancellationToken);
-    }
-}

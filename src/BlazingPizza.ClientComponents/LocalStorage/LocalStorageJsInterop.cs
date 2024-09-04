@@ -5,7 +5,7 @@ using Microsoft.JSInterop;
 
 namespace BlazingPizza.ClientComponents;
 
-public sealed class LocalStorageJsInterop(IJSRuntime jsRuntime) : IAsyncDisposable
+public sealed class LocalStorageJSInterop(IJSRuntime jsRuntime) : IAsyncDisposable
 {
     private readonly Lazy<Task<IJSObjectReference>> _moduleTask =
         new(valueFactory: () => jsRuntime.InvokeAsync<IJSObjectReference>(

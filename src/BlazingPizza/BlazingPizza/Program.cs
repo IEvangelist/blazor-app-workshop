@@ -1,11 +1,7 @@
-using BlazingPizza;
-using BlazingPizza.Components;
-using BlazingPizza.Components.Account;
-using BlazingPizza.Data;
-using BlazingPizza.Orders;
-using BlazingPizza.Pizzas;
-using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.AspNetCore.Identity;
+// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+
+using Microsoft.AspNetCore.Hosting.Server.Features;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,10 +21,6 @@ builder.Services.AddScoped<IdentityUserAccessor>();
 builder.Services.AddScoped<IdentityRedirectManager>();
 builder.Services.AddScoped<AuthenticationStateProvider, PersistingRevalidatingAuthenticationStateProvider>();
 builder.Services.AddScoped<OrderDataService>();
-
-builder.Services.AddHttpClient(
-    "",
-    client => client.BaseAddress = new("https://localhost:7099"));
 
 builder.Services.AddAuthentication(options =>
     {
@@ -88,5 +80,6 @@ app.MapAdditionalIdentityEndpoints();
 
 app.MapOrderEndpoints();
 app.MapPizzaEndpoints();
+app.MapNotificationEndpoints();
 
 app.Run();

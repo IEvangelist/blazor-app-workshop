@@ -7,9 +7,9 @@ namespace Microsoft.Extensions.DependencyInjection;
 
 public static class LocalStorageServiceCollectionExtensions
 {
-    public static IServiceCollection AddLocalStorageJsInterop(this IServiceCollection services)
+    public static IServiceCollection AddLocalStorageJSInterop(this IServiceCollection services)
     {
-        services.AddScoped<LocalStorageJsInterop>();
+        services.AddScoped<LocalStorageJSInterop>();
 
         return services;
     }

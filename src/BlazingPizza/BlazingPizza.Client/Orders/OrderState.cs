@@ -3,7 +3,7 @@
 
 namespace BlazingPizza.Client.Orders;
 
-internal sealed class OrderState
+internal sealed class OrderState(LocalStorageJSInterop js)
 {
     public bool ShowingConfigureDialog { get; private set; }
 
@@ -43,7 +43,31 @@ internal sealed class OrderState
 
     public void RemoveConfiguredPizza(Pizza pizza) => Order.Pizzas.Remove(pizza);
 
-    public void ResetOrder() => Order = new();
+    public async ValueTask InitializeOrderAsync()
+    {
+        var address = await js.GetLocalStorageItemAsync<Address>(
+            "address");
 
-    public void ReplaceOrder(Order order) => Order = order;
+        if (address is not null)
+        {
+            Order.DeliveryAddress = address;
+        }
+    }
+
+    public async ValueTask ResetOrderAsync()
+    {
+        if (Order.DeliveryAddress is not null)
+        {
+            await js.SetLocalStorageItemAsync(
+                "address", Order.DeliveryAddress);
+        }
+
+        var address = await js.GetLocalStorageItemAsync<Address>(
+            "address");
+
+        Order = new Order()
+        {
+            DeliveryAddress = address
+        };
+    }
 }

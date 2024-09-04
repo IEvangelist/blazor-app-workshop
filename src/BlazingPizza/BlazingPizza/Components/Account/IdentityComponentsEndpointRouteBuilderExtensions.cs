@@ -1,14 +1,12 @@
+// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+
 using BlazingPizza.Components.Account.Pages;
 using BlazingPizza.Components.Account.Pages.Manage;
-using BlazingPizza.Data;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Http.Extensions;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
-using System.Security.Claims;
-using System.Text.Json;
 
 namespace Microsoft.AspNetCore.Routing;
 

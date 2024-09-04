@@ -1,7 +1,7 @@
 ﻿@page "/orders"
 
 @attribute [Authorize]
-@rendermode @(new InteractiveServerRenderMode(prerender: true))
+@rendermode InteractiveServer
 
 @inject OrderDataService Data
 

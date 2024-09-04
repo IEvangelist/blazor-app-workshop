@@ -2,7 +2,7 @@
 
 @rendermode @(new InteractiveWebAssemblyRenderMode(prerender: false))
 
-@inject ApiClient ApiClient
+@inject PizzaClient PizzaClient
 @inject OrderState OrderState
 @inject NavigationManager NavigationManager
 @inject IJSRuntime JavaScript
@@ -39,10 +39,10 @@
     }
     else
     {
-        <div class="empty-cart">Choose a pizza<br>to get started</div>
+        <div class="empty-cart user-select-none">Choose a pizza<br>to get started</div>
     }
 
-    <div class="order-total @(Order.Pizzas.Count is 0 ? "hidden" : "")">
+    <div class="order-total user-select-none @(Order.Pizzas.Count is 0 ? "hidden" : "")">
         Total:
         <span class="total-price">@Order.GetFormattedTotalPrice()</span>
         <button class="btn btn-warning @(Order.Pizzas.Count is 0 ? " disabled" : "")"
@@ -64,12 +64,9 @@
 
     protected override async Task OnInitializedAsync()
     {
-        _specials = await ApiClient.GetSpecialsAsync();
+        _specials = await PizzaClient.GetSpecialsAsync();
 
-        if (_specials is { Count: > 0 })
-        {
-            StateHasChanged();
-        }
+        await OrderState.InitializeOrderAsync();
     }
 
     async Task RemovePizza(Pizza configuredPizza)
@@ -81,8 +78,5 @@
         }
     }
 
-    void GoToCheckout()
-    {
-        NavigationManager.NavigateTo("/checkout");
-    }
+    void GoToCheckout() => NavigationManager.NavigateTo("/checkout");
 }
