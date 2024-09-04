@@ -6,6 +6,7 @@ global using System.Security.Claims;
 
 global using BlazingPizza.Client;
 global using BlazingPizza.Client.Orders;
+global using BlazingPizza.Client.Pizzas;
 global using BlazingPizza.ClientComponents;
 
 global using Microsoft.AspNetCore.Authorization;
